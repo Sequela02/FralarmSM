@@ -19,6 +19,20 @@ public class Client {
     private Long id;
 
     private String name;
-    private String email; // Example additional field
-    // Other fields, constructors, getters and setters are handled by Lombok
+    private String email;
+    private String address;       // Address of the client
+    private String phoneNumber;   // Contact phone number
+    private String company;       // Associated company, if applicable
+
+    // Constructors, getters, and setters are handled by Lombok
+
+    // Example of a constructor with all fields
+    public Client(String name, String email, String address, String phoneNumber, String company) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.company = company;
+    }
 }
+
