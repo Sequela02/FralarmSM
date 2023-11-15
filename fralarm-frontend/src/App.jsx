@@ -2,10 +2,14 @@
 import './App.css';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-
+import Header from './components/Main Page/Header';
+import { Toaster, toast } from 'sonner';
+import HomePage from './components/Main Page/HomePage';
 import ClientManagementPage from "./components/ClientManagement/ClientManagementPage";
-// Other imports...
+import ProjectManagementPage from "./components/ProjectManagementPage/ProjectDashboard";
+import InventoryManagementPage from "./components/InventoryManagement/InventoryDashboard";
+
+
 
 /**
  * App Component
@@ -20,16 +24,19 @@ function App() {
       <Router>
         {/* Main App container */}
         <div className="App">
+            <Toaster />
           {/* Header component */}
-
+            <Header />
 
           {/* Routes for different pages */}
           <Routes>
             {/* Home Page */}
-
+              <Route path="/" element={<HomePage />} />
 
             {/* Client Management Page */}
               <Route path="/clients" element={<ClientManagementPage />} />
+              <Route path="/projects" element={<ProjectManagementPage />} />
+              <Route path="/inventory" element={<InventoryManagementPage />} />
 
             {/* Other routes... */}
           </Routes>

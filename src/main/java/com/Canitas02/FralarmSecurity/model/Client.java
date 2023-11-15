@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a client in the FrAlarm Security Management System.
+ */
 @Entity
 @Getter
 @Setter
@@ -24,9 +27,15 @@ public class Client {
     private String phoneNumber;   // Contact phone number
     private String company;       // Associated company, if applicable
 
-    // Constructors, getters, and setters are handled by Lombok
-
-    // Example of a constructor with all fields
+    /**
+     * Constructs a new Client with the specified information.
+     *
+     * @param name        The name of the client.
+     * @param email       The email address of the client.
+     * @param address     The address of the client.
+     * @param phoneNumber The contact phone number of the client.
+     * @param company     The associated company, if applicable.
+     */
     public Client(String name, String email, String address, String phoneNumber, String company) {
         this.name = name;
         this.email = email;

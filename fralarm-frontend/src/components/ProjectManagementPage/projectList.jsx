@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { fetchClients } from '../../services/clientService';
-import { Toaster, toast } from 'sonner';
-import { FaSearch, FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
-
+import { fetchClients } from '../../services/projectsService';
 // Import additional libraries for sorting, exporting, etc.
 
-const ClientList = () => {
-    const [clients, setClients] = useState([]);
+const ProjectList = () => {
+    const [projects, setProjects] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     // Placeholder state for sort configuration
     const [sortConfig, setSortConfig] = useState(null);
@@ -14,16 +11,29 @@ const ClientList = () => {
     useEffect(() => {
         fetchClients().then(response => {
             // Assuming response.data is the array of clients
-            setClients(response.data);
+            setProjects(response.data);
         }).catch(error => {
             console.error('Error fetching clients:', error);
         });
     }, []);
 
     // Placeholder function for sorting
+    const sortData = (field) => {
+        // Implement sorting logic here...
+    };
 
+    // Placeholder function for exporting data
+    const exportData = () => {
+        // Implement data export logic here...
+    };
     // Function to handle client deletion
+    const handleDelete = (clientId) => {
+        // Confirm with the user
+        if (window.confirm('Are you sure you want to delete this client?')) {
 
+
+        }
+    };
 
     return (
         <div className="overflow-hidden shadow-md sm:rounded-lg">
@@ -31,12 +41,12 @@ const ClientList = () => {
             <div className="bg-white p-4 flex justify-between items-center">
                 <div className="flex basis-2/3">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Add New Client
+                        Add New Project
                     </button>
                     <div className="ml-4 relative">
                         <input
                             type="text"
-                            placeholder="Search clients..."
+                            placeholder="Search project..."
                             className="border p-2 rounded w-full"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
@@ -60,19 +70,22 @@ const ClientList = () => {
                 <thead>
                 <tr>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                        ID
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                        Description
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                        Start Date
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
                         Name
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Email
+                        Status
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Address
-                    </th>
-                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Phone Number
-                    </th>
-                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Company
+                        End Date
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
                         Actions
@@ -80,36 +93,40 @@ const ClientList = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {clients.map(client => (
-                    <tr key={client.id} className="hover:bg-blue-50">
+                {projects.map(project => (
+                    <tr key={project.id} className="hover:bg-blue-50">
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.name}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.id}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.email}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.description}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.address}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.startDate}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.phoneNumber}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.name}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.company}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.status}</p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
+                            <p className="text-gray-900 whitespace-no-wrap">{project.endDate}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <div className="flex justify-center">
-                                {/* Inside your map function for clients */}
                                 <button className="text-blue-500 hover:text-blue-700 mr-3">
-                                    <FaEye className="inline mr-1" /> View
+                                    {/* Add an icon for view details */}
+                                    View
                                 </button>
                                 <button className="text-green-500 hover:text-green-700 mr-3">
-                                    <FaEdit className="inline mr-1" /> Edit
+                                    {/* Add an icon for edit */}
+                                    Edit
                                 </button>
                                 <button className="text-red-500 hover:text-red-700">
-                                    <FaTrashAlt className="inline mr-1" /> Delete
+                                    {/* Add an icon for delete */}
+                                    Delete
                                 </button>
-
                             </div>
                         </td>
                     </tr>
@@ -121,4 +138,4 @@ const ClientList = () => {
 
 };
 
-export default ClientList;
+export default ProjectList;

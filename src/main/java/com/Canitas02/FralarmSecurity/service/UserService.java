@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing users in the FrAlarm Security Management System.
+ */
 @Service
 public class UserService {
 
@@ -18,19 +21,44 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Create a new user.
+     *
+     * @param user The user to be created.
+     * @return The created user.
+     */
     public User createUser(User user) {
         // Here you would add logic to encode the password before saving
         return userRepository.save(user);
     }
 
+    /**
+     * Retrieve a user by ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return An Optional containing the user if found, or empty if not found.
+     */
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
+    /**
+     * Retrieve all users.
+     *
+     * @return A list of all users.
+     */
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * Update a user's information.
+     *
+     * @param id           The ID of the user to update.
+     * @param userDetails  The updated user information.
+     * @return The updated user.
+     * @throws IllegalArgumentException if the user with the specified ID is not found.
+     */
     public User updateUser(Long id, User userDetails) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with ID " + id + " not found"));
@@ -39,6 +67,11 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    /**
+     * Delete a user by ID.
+     *
+     * @param id The ID of the user to delete.
+     */
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { fetchClients } from '../../services/clientService';
+import { fetchClients } from '../../services/inventoryService';
 import { Toaster, toast } from 'sonner';
 import { FaSearch, FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 // Import additional libraries for sorting, exporting, etc.
 
-const ClientList = () => {
-    const [clients, setClients] = useState([]);
+const InventoryList = () => {
+    const [items, setItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     // Placeholder state for sort configuration
     const [sortConfig, setSortConfig] = useState(null);
@@ -14,7 +14,7 @@ const ClientList = () => {
     useEffect(() => {
         fetchClients().then(response => {
             // Assuming response.data is the array of clients
-            setClients(response.data);
+            setItems(response.data);
         }).catch(error => {
             console.error('Error fetching clients:', error);
         });
@@ -31,12 +31,12 @@ const ClientList = () => {
             <div className="bg-white p-4 flex justify-between items-center">
                 <div className="flex basis-2/3">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Add New Client
+                        Add New Item
                     </button>
                     <div className="ml-4 relative">
                         <input
                             type="text"
-                            placeholder="Search clients..."
+                            placeholder="Search item..."
                             className="border p-2 rounded w-full"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
@@ -60,19 +60,19 @@ const ClientList = () => {
                 <thead>
                 <tr>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                        ID
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
                         Name
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Email
+                        Description
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Address
+                        Price
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Phone Number
-                    </th>
-                    <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Company
+                        Quantity
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
                         Actions
@@ -80,22 +80,22 @@ const ClientList = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {clients.map(client => (
-                    <tr key={client.id} className="hover:bg-blue-50">
+                {items.map(item => (
+                    <tr key={item.id} className="hover:bg-blue-50">
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.name}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{item.id}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.email}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{item.name}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.address}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{item.description}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.phoneNumber}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{item.price}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.company}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{item.quantity}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <div className="flex justify-center">
@@ -121,4 +121,4 @@ const ClientList = () => {
 
 };
 
-export default ClientList;
+export default InventoryList;

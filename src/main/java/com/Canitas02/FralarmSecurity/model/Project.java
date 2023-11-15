@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * Represents a project in the FrAlarm Security Management System.
+ */
 @Entity
 @Getter
 @Setter
@@ -21,7 +24,7 @@ public class Project {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private ProjectStatus status;  // Assuming you have an enum for different project statuses
+    private ProjectStatus status;  // Status of the project (e.g., PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD)
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -30,12 +33,18 @@ public class Project {
     @JoinColumn(name = "client_id")
     private Client client;  // Link to the client entity
 
-    // Other fields like tasks or inventory items can be added here
-    // Example: Set<Task> tasks or Set<InventoryItem> inventoryItems
-
     // Constructors, getters, and setters are handled by Lombok
 
-    // Example of a constructor with all fields
+    /**
+     * Constructs a new Project with the specified information.
+     *
+     * @param name        The name of the project.
+     * @param description The description of the project.
+     * @param status      The status of the project.
+     * @param startDate   The start date of the project.
+     * @param endDate     The end date of the project.
+     * @param client      The client associated with the project.
+     */
     public Project(String name, String description, ProjectStatus status, LocalDate startDate, LocalDate endDate, Client client) {
         this.name = name;
         this.description = description;
@@ -51,10 +60,13 @@ public class Project {
     // this.tasks = new HashSet<>();
 }
 
-// Example of ProjectStatus enum
+/**
+ * Enum representing the possible statuses of a project.
+ */
 enum ProjectStatus {
     PLANNING,
     IN_PROGRESS,
     COMPLETED,
     ON_HOLD
 }
+
