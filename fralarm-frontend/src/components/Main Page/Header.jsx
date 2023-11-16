@@ -1,9 +1,9 @@
 import React from 'react';
-// Import other components or assets if necessary, like a logo
+import { FaHome, FaUsers, FaProjectDiagram, FaWarehouse, FaSignInAlt } from 'react-icons/fa'; // Icons for menu items
 
 const Header = () => {
     return (
-        <header className="bg-blue-900 shadow-lg">
+        <header className="bg-gradient-to-r from-blue-800 to-blue-500 shadow-lg">
             <div className="container mx-auto px-6 py-3 flex justify-between items-center">
                 <a href="/" className="text-lg font-semibold text-white flex items-center">
                     {/* Replace with your actual logo if you have one */}
@@ -28,33 +28,32 @@ const Header = () => {
                 <nav className="block">
                     <ul className="flex items-center space-x-6">
                         <li>
-                            <a href="/" className="text-white hover:text-blue-300 transition duration-300">
-                                Home
+                            <a href="/" className="text-white hover:text-blue-300 transition duration-300 flex items-center">
+                                <FaHome className="mr-1" /> Home
                             </a>
                         </li>
                         <li>
-                            <a href="/clients" className="text-white hover:text-blue-300 transition duration-300">
-                                Clients
+                            <a href="/clients" className="text-white hover:text-blue-300 transition duration-300 flex items-center">
+                                <FaUsers className="mr-1" /> Clients
                             </a>
                         </li>
                         <li>
-                            <a href="/projects" className="text-white hover:text-blue-300 transition duration-300">
-                                Projects
+                            <a href="/projects" className="text-white hover:text-blue-300 transition duration-300 flex items-center">
+                                <FaProjectDiagram className="mr-1" /> Projects
                             </a>
                         </li>
                         <li>
-                            <a href="/inventory" className="text-white hover:text-blue-300 transition duration-300">
-                                Inventory
+                            <a href="/inventory" className="text-white hover:text-blue-300 transition duration-300 flex items-center">
+                                <FaWarehouse className="mr-1" /> Inventory
                             </a>
                         </li>
                         {/* Add more navigation items here */}
                     </ul>
                 </nav>
 
-                {/* Placeholder for user account or settings */}
                 <div className="flex items-center">
-                    <button className="bg-blue-800 hover:bg-blue-700 transition duration-300 text-white px-4 py-2 rounded focus:outline-none">
-                        Login
+                    <button className="bg-blue-800 hover:bg-blue-700 transition duration-300 text-white px-4 py-2 rounded flex items-center focus:outline-none">
+                        <FaSignInAlt className="mr-1" /> Login
                     </button>
                 </div>
             </div>
