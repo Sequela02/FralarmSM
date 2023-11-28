@@ -95,8 +95,12 @@ const ClientList = () => {
                             <p className="text-gray-900 whitespace-no-wrap">{client.phoneNumber}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{client.company}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                                {client.company ? client.company.name : 'No Company'}
+                            </p>
+
                         </td>
+
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <div className="flex justify-center">
                                 {/* Inside your map function for clients */}

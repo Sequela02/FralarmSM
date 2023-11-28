@@ -2,6 +2,7 @@ package com.Canitas02.FralarmSecurity;
 
 import com.Canitas02.FralarmSecurity.controller.ClientController;
 import com.Canitas02.FralarmSecurity.model.Client;
+import com.Canitas02.FralarmSecurity.model.Company;
 import com.Canitas02.FralarmSecurity.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,9 +39,13 @@ public class ClientControllerTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize your client object here
-        client = new Client("Test Name", "test@example.com", "123 Test Address", "1234567890", "Test Company");
+        // Initialize your Company object first
+        Company company = new Company("Company Name", "company@example.com", "456 Company Address");
+
+        // Then initialize your Client object with the associated Company
+        client = new Client("Test Name", "test@example.com", "123 Test Address", "1234567890", company);
     }
+
 
     @Test
     public void testCreateClient() throws Exception {

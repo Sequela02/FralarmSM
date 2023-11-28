@@ -41,8 +41,6 @@ const MainClientPage = () => {
                 {/* ... other shortcuts ... */}
             </div>
 
-            {/* Additional Creative Sections */}
-            {/* Consider adding a collapsible FAQ section, interactive graphs, or a live feed of client activities */}
 
         </div>
     );

@@ -7,6 +7,8 @@ const ClientManagementPage = () => {
     const [activeComponent, setActiveComponent] = React.useState('mainClientPage'); // Default to MainClientPage
 
     return (
+
+
         <div className="flex flex-col md:flex-row min-h-screen bg-blue-50">
             {/* Sidebar */}
             <div className="md:w-1/5 bg-blue-100 p-4">

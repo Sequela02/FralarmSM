@@ -1,15 +1,17 @@
 package com.Canitas02.FralarmSecurity.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a client in the FrAlarm Security Management System.
+ * Each client can have multiple associated projects.
  */
 @Entity
 @Getter
@@ -25,7 +27,14 @@ public class Client {
     private String email;
     private String address;       // Address of the client
     private String phoneNumber;   // Contact phone number
-    private String company;       // Associated company, if applicable
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "company_id") // This column in the Client table will store the foreign key
+    private Company company; // This field corresponds to 'mappedBy' in Company
+
+    @OneToMany(mappedBy = "client", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
 
     /**
      * Constructs a new Client with the specified information.
@@ -34,9 +43,9 @@ public class Client {
      * @param email       The email address of the client.
      * @param address     The address of the client.
      * @param phoneNumber The contact phone number of the client.
-     * @param company     The associated company, if applicable.
+     * @param company     The associated company.
      */
-    public Client(String name, String email, String address, String phoneNumber, String company) {
+    public Client(String name, String email, String address, String phoneNumber, Company company) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -44,4 +53,3 @@ public class Client {
         this.company = company;
     }
 }
-

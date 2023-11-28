@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProjects } from '../../services/projectsService';
-import { fetchClients } from '../../services/clientService';
+import { fetchClients } from '../../services/clientService'; // Import the client fetch function
+
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
-    const [clients, setClients] = useState({});
+    const [clients, setClients] = useState([]); // State to store the list of clients
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetchProjects().then(response => {
-            setProjects(response.data);
-        }).catch(error => {
-            console.error('Error fetching projects:', error);
-        });
-
-        fetchClients().then(response => {
-            const clientMap = {};
-            response.data.forEach(client => {
-                clientMap[client.id] = client.name;
+        // Fetch projects
+        fetchProjects()
+            .then(response => {
+                console.log('Projects fetched:', response.data);
+                setProjects(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching projects:', error);
             });
-            setClients(clientMap);
-        }).catch(error => {
-            console.error('Error fetching clients:', error);
-        });
+
+        // Fetch clients
+        fetchClients()
+            .then(response => {
+                console.log('Clients fetched:', response.data);
+                setClients(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching clients:', error);
+            });
     }, []);
 
-
+    // Function to find the client associated with a project
+    const findClientForProject = (projectId) => {
+        return clients.find(client => client.id === projectId);
+    };
 
     return (
+
+
         <div className="overflow-hidden shadow-md sm:rounded-lg">
               <div className="bg-white p-4 flex justify-between items-center">
             <div className="flex basis-2/3">
@@ -63,7 +73,7 @@ const ProjectList = () => {
                         ID
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                        Description
+                        Name
                     </th>
                     <th className="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-center text-xs font-semibold text-blue-600 uppercase tracking-wider">
                         Start Date
@@ -83,24 +93,28 @@ const ProjectList = () => {
                 </tr>
                 </thead>
                 <tbody>
+
                 {projects.map(project => (
+
+
                     <tr key={project.id} className="hover:bg-blue-50">
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{project.id}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                                {project.id}
+                            </p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{project.description}</p>
+                            <p className="text-gray-900 whitespace-no-wrap">{project.name}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">{project.startDate}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">
-                                {project.client.name}
-
+                                {project.clientId ? findClientForProject(project.clientId)?.name : 'No Client Name'}
                             </p>
-
                         </td>
+
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">{project.status}</p>
                         </td>

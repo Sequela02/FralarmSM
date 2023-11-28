@@ -4,38 +4,48 @@ import com.Canitas02.FralarmSecurity.model.Project;
 import com.Canitas02.FralarmSecurity.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Service class for managing projects in the FrAlarm Security Management System.
+ * Handles operations related to the creation, retrieval, update, and deletion
+ * of project records.
  */
 @Service
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
+    /**
+     * Autowires the ProjectRepository to enable interaction with the database.
+     *
+     * @param projectRepository The repository for project-related operations.
+     */
     @Autowired
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 
     /**
-     * Create a new project.
+     * Creates and saves a new project.
      *
      * @param project The project to be created.
-     * @return The created project.
+     * @return The saved project entity.
      */
+    @Transactional
     public Project createProject(Project project) {
         // Additional business logic can be added here before saving
         return projectRepository.save(project);
     }
 
     /**
-     * Retrieve a project by ID.
+     * Retrieves a project by its ID.
      *
-     * @param id The ID of the project to retrieve.
+     * @param id The ID of the project.
      * @return An Optional containing the project if found, or empty if not found.
      */
     public Optional<Project> getProjectById(Long id) {
@@ -43,7 +53,7 @@ public class ProjectService {
     }
 
     /**
-     * Retrieve all projects.
+     * Retrieves all projects in the system.
      *
      * @return A list of all projects.
      */
@@ -52,28 +62,30 @@ public class ProjectService {
     }
 
     /**
-     * Update a project's information.
+     * Updates the details of an existing project.
      *
-     * @param id            The ID of the project to update.
-     * @param projectDetails The updated project information.
-     * @return The updated project.
-     * @throws IllegalArgumentException if the project with the specified ID is not found.
+     * @param id              The ID of the project to update.
+     * @param projectDetails  The updated project information.
+     * @return The updated project entity.
+     * @throws EntityNotFoundException if the project with the specified ID is not found.
      */
+    @Transactional
     public Project updateProject(Long id, Project projectDetails) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Project with ID " + id + " not found"));
-        // Update project details here
-        return projectRepository.save(project);
+        Project existingProject = projectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Project with ID " + id + " not found"));
+        // Logic to update project details
+        return projectRepository.save(existingProject);
     }
 
     /**
-     * Delete a project by ID.
+     * Deletes a project by its ID.
      *
      * @param id The ID of the project to delete.
      */
+    @Transactional
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
 
-    // Add more methods as needed, for example to handle project status updates, etc.
+    // Additional methods as per your business logic
 }

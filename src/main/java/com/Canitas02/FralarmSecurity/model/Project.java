@@ -1,11 +1,11 @@
 package com.Canitas02.FralarmSecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
-import java.util.Set;
 
 /**
  * Represents a project in the FrAlarm Security Management System.
@@ -31,9 +31,13 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonBackReference
     private Client client;  // Link to the client entity
 
-    // Constructors, getters, and setters are handled by Lombok
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    @JsonBackReference
+    private Location location; // Link to the location entity
 
     /**
      * Constructs a new Project with the specified information.
@@ -44,20 +48,19 @@ public class Project {
      * @param startDate   The start date of the project.
      * @param endDate     The end date of the project.
      * @param client      The client associated with the project.
+     * @param location    The location where the project is executed.
      */
-    public Project(String name, String description, ProjectStatus status, LocalDate startDate, LocalDate endDate, Client client) {
+    public Project(String name, String description, ProjectStatus status, LocalDate startDate, LocalDate endDate, Client client, Location location) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
         this.client = client;
+        this.location = location;
     }
 
-    // If you have collections like tasks or inventory items, you might initialize them here
-    // to avoid NullPointerException when adding to the collection.
-    // Example:
-    // this.tasks = new HashSet<>();
+    // Additional functionalities or methods can be added as needed.
 }
 
 /**
@@ -69,4 +72,3 @@ enum ProjectStatus {
     COMPLETED,
     ON_HOLD
 }
-
