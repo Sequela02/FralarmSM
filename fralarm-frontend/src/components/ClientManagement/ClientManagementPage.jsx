@@ -1,5 +1,6 @@
 import React from 'react';
 import ClientList from './ClientList';
+import ClientAnalytics from "./ClientAnalytics";
 import MainClientPage from './MainClientPage'; // Importing the new MainClientPage component
 import { FaUsers, FaFilter, FaFileExport, FaCog, FaChartBar, FaHome } from 'react-icons/fa';
 
@@ -25,7 +26,7 @@ const ClientManagementPage = () => {
                         <button
                             className="text-blue-700 font-semibold hover:bg-blue-200 p-2 rounded flex items-center"
                             onClick={() => setActiveComponent('clientList')}>
-                            <FaUsers className="mr-2" /> Client List
+                            <FaChartBar className="mr-2" /> Client List
                         </button>
                     </li>
                     <li className="mb-2">
@@ -49,12 +50,9 @@ const ClientManagementPage = () => {
             {/* Main content */}
             <div className="flex-grow p-8">
                 {activeComponent === 'mainClientPage' && <MainClientPage />}
-                {activeComponent === 'clientList' && (
-                    <div className="py-4">
-                        <ClientList />
-                    </div>
-                )}
-                {/* Additional components can be added here based on activeComponent */}
+                {activeComponent === 'clientList' && <ClientList />}
+                {activeComponent === 'clientAnalytics' && <ClientAnalytics />}
+                {/* Additional conditions for other components like settings, etc. */}
             </div>
         </div>
     );

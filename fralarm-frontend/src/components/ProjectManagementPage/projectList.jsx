@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProjects } from '../../services/projectsService';
-import { fetchClients } from '../../services/clientService'; // Import the client fetch function
 
 
+/**
+ * ProjectList Component - Displays a list of projects and their associated clients.
+ * Allows for searching, adding new projects, and exporting data.
+ */
 const ProjectList = () => {
+    // State to store the list of projects
     const [projects, setProjects] = useState([]);
-    const [clients, setClients] = useState([]); // State to store the list of clients
+    // State for handling search input
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Fetch projects on component mount
     useEffect(() => {
-        // Fetch projects
         fetchProjects()
             .then(response => {
                 console.log('Projects fetched:', response.data);
@@ -18,53 +22,38 @@ const ProjectList = () => {
             .catch(error => {
                 console.error('Error fetching projects:', error);
             });
-
-        // Fetch clients
-        fetchClients()
-            .then(response => {
-                console.log('Clients fetched:', response.data);
-                setClients(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching clients:', error);
-            });
     }, []);
-
-    // Function to find the client associated with a project
-    const findClientForProject = (projectId) => {
-        return clients.find(client => client.id === projectId);
-    };
 
     return (
 
 
         <div className="overflow-hidden shadow-md sm:rounded-lg">
-              <div className="bg-white p-4 flex justify-between items-center">
-            <div className="flex basis-2/3">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add New Project
-                </button>
-                <div className="ml-4 relative">
-                    <input
-                        type="text"
-                        placeholder="Search project..."
-                        className="border p-2 rounded w-full"
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                    />
-                    {/* Search Icon */}
-                    <div className="absolute right-3 top-3">
-                        <svg className="w-4 h-4 text-gray-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M21 21l-4.35-4.35m2.35-3.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
-                        </svg>
+            <div className="bg-white p-4 flex justify-between items-center">
+                <div className="flex basis-2/3">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Add New Project
+                    </button>
+                    <div className="ml-4 relative">
+                        <input
+                            type="text"
+                            placeholder="Search project..."
+                            className="border p-2 rounded w-full"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        {/* Search Icon */}
+                        <div className="absolute right-3 top-3">
+                            <svg className="w-4 h-4 text-gray-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M21 21l-4.35-4.35m2.35-3.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
                 {/* Export Data Button */}
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Export Data
-            </button>
-        </div>
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Export Data
+                </button>
+            </div>
 
             <table className="min-w-full leading-normal">
                 <thead>
@@ -111,7 +100,7 @@ const ProjectList = () => {
                         </td>
                         <td className="px-5 py-5 border-b border-blue-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">
-                                {project.clientId ? findClientForProject(project.clientId)?.name : 'No Client Name'}
+                                {project.client?.name || 'No Client'}
                             </p>
                         </td>
 
@@ -143,6 +132,7 @@ const ProjectList = () => {
             </table>
         </div>
     );
+
 };
 
-export default ProjectList;
+export default ProjectList; // Export the ProjectList component

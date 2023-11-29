@@ -1,11 +1,16 @@
 package com.Canitas02.FralarmSecurity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a project in the FrAlarm Security Management System.
@@ -29,10 +34,14 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
 
+
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    @JsonBackReference
-    private Client client;  // Link to the client entity
+
+    @JsonIdentityInfo(generator = com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JoinColumn(name = "client_id") // This column in the Client table will store the foreign key
+    private Client client;
+
+
 
     @ManyToOne
     @JoinColumn(name = "location_id")

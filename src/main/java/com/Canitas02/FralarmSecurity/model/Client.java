@@ -1,5 +1,6 @@
 package com.Canitas02.FralarmSecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class Client {
     @JoinColumn(name = "company_id") // This column in the Client table will store the foreign key
     private Company company; // This field corresponds to 'mappedBy' in Company
 
-    @OneToMany(mappedBy = "client", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
     /**

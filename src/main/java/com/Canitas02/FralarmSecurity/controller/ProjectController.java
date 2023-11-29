@@ -57,8 +57,9 @@ public class ProjectController {
      */
     @GetMapping
     public List<Project> getAllProjects() {
-        return projectService.getAllProjects();
+        return projectService.getAllProjects(); // This should return projects with client data
     }
+
 
     /**
      * Update a project's information.
