@@ -8,7 +8,7 @@ import HomePage from './components/Main Page/HomePage';
 import ClientManagementPage from "./components/ClientManagement/ClientManagementPage";
 import ProjectManagementPage from "./components/ProjectManagementPage/ProjectDashboard";
 import InventoryManagementPage from "./components/InventoryManagement/InventoryDashboard";
-
+import CompanyManagementPage from "./components/CompanyManagement/CompanyDashboard";
 
 
 /**
@@ -37,7 +37,7 @@ function App() {
               <Route path="/clients" element={<ClientManagementPage />} />
               <Route path="/projects" element={<ProjectManagementPage />} />
               <Route path="/inventory" element={<InventoryManagementPage />} />
-
+              <Route path="/companies" element={<CompanyManagementPage />} />
             {/* Other routes... */}
           </Routes>
 
